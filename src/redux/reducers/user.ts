@@ -1,7 +1,6 @@
 import * as types from "../actions/types";
-import { ObjectID } from "mongodb";
 export interface IBlogPost extends Document {
-  user: ObjectID;
+  user: any;
   name: string;
   title: string;
   blogContent: string;
