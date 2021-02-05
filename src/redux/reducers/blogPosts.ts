@@ -3,10 +3,12 @@ import * as types from "../actions/types";
 interface InitalStateBlogPost {
   posts: [];
   loading: boolean;
+  posted: boolean;
 }
 export const initialState: InitalStateBlogPost = {
   posts: [],
   loading: true,
+  posted: false,
 };
 interface Action {
   type: string;
@@ -27,6 +29,13 @@ const blogPost = (state = initialState, action: Action) => {
       return {
         ...state,
         posts: [...state.posts, payload],
+        posted: true,
+      };
+    }
+    case types.REFRESH_SUCCESS: {
+      return {
+        ...state,
+        posted: false,
       };
     }
     default: {

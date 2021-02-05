@@ -6,7 +6,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImageResize from "filepond-plugin-image-resize";
-
+import FormLoader from "./mincomponents/formLoader";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { blogPostAction, getAllPost } from "../redux/actions/blogPost";
@@ -18,8 +18,10 @@ import {
   getUserPostsAction,
   logOutUser,
   newPostUserAction,
+  refreshPosted,
 } from "../redux/actions/users";
 import { motion, useAnimation } from "framer-motion";
+import { truncate } from "fs";
 
 export interface HomePageProps {
   theme: string;
@@ -46,6 +48,8 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const posts = useSelector((state: any) => state.user.posts);
   const loading = useSelector((state: any) => state.user.loadingPosts);
   const [click, setClick] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const posted = useSelector((state: any) => state.blogPost.posted);
   const [blogPost, setBlogPost] = useState<BlogPost>({
     title: "",
     blogContent: "",
@@ -87,6 +91,9 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     dispatch(blogPostAction(title, blogContent, img, token, imgType));
+    setSubmitLoading(true);
+    setCreatePostClick(false);
+    setVlocation(-880);
     console.log(blogPost);
   };
   const toBase64 = (file: any) =>
@@ -207,6 +214,15 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     setCreatePostClick(false);
     setVlocation(-880);
   };
+  //toRemoveLoadingAndCloseTheForm
+  if (posted && submitLoading) {
+    setTimeout(() => {
+      setSubmitLoading(false);
+      dispatch(refreshPosted());
+    }, 3000);
+
+    console.log("hey");
+  }
   return (
     <>
       <div className="homePage">
@@ -225,6 +241,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
         >
           Create Post
         </button>
+        {submitLoading ? <FormLoader /> : ""}
         <div style={styleThemeBMain} className="homeBlogContainer">
           {ifLoading}
         </div>

@@ -93,6 +93,7 @@ const user = (state = initialState, action: Action) => {
         posts: filterPosts,
       };
     }
+
     default: {
       return state;
     }

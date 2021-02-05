@@ -43,3 +43,8 @@ export const deletePostAction = (token: string, postID: string) => {
     payload: { token, postID },
   };
 };
+export const refreshPosted = () => {
+  return {
+    type: types.REFRESH_SAGA,
+  };
+};
