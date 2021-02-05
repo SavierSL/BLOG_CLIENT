@@ -1,0 +1,29 @@
+.primary-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &_primary-input {
+    width: 35rem;
+    margin-top: 3rem;
+    padding: 0.5rem;
+    border-radius: 0.7rem;
+    border: none;
+    background: rgb(250, 247, 236);
+    height: 5rem;
+    margin-bottom: 2rem;
+  }
+  &_primary-button {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    width: 10rem;
+    border-radius: 1rem;
+    border: none;
+    width: 35rem;
+    margin: 2rem;
+    cursor: pointer;
+    &:hover {
+      background: darken($color: #00aeef, $amount: 5);
+    }
+  }
+}

@@ -1,0 +1,86 @@
+.homePage {
+  text-align: left;
+  height: 100%;
+  width: 100%;
+  margin: 0rem auto 0rem auto;
+  padding: 2rem 5rem 0 5rem;
+  padding-bottom: 25rem;
+  &_createBlogContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 4rem;
+    border-radius: 1rem;
+    border: solid 2px lightblue;
+    background: #fff;
+    width: 80%;
+    margin: 2rem auto 0 auto;
+  }
+}
+.homeBlogContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  padding: 5rem;
+  height: 100%;
+  width: 80vw;
+  margin: 4rem auto 0 auto;
+
+  &_blogs {
+    border-radius: 3rem;
+    margin: 1rem;
+    padding: 2rem;
+    height: 10rem;
+    display: flex;
+    @include respond(phone) {
+      flex-direction: column;
+      height: 100%;
+      text-align: center;
+    }
+    @include respond(tab-port) {
+      flex-direction: column;
+      height: 100%;
+      text-align: center;
+    }
+    align-items: center;
+    &-image {
+      border: solid 1px rgb(54, 200, 253);
+      border-radius: 100%;
+      height: 5rem;
+      @include respond(phone) {
+        margin: 1rem;
+      }
+      @include respond(tab-port) {
+        margin: 1rem;
+      }
+    }
+    &-details {
+      margin-left: 5%;
+      @include respond(phone) {
+        margin: 1rem;
+      }
+      @include respond(tab-port) {
+        margin: 1rem;
+      }
+    }
+    &-link {
+      margin-left: 10%;
+      @include respond(phone) {
+        margin: 1rem;
+      }
+      @include respond(tab-port) {
+        margin: 1rem;
+      }
+    }
+    &-delete {
+      margin-left: 8%;
+      @include respond(phone) {
+        margin: 1rem;
+      }
+      @include respond(tab-port) {
+        margin: 1rem;
+      }
+    }
+  }
+}

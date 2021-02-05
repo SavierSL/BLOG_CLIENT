@@ -1,0 +1,34 @@
+.primary-button {
+  border: none;
+  padding: 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  &:hover {
+    background-color: darken($color: #00aeef, $amount: 10%);
+  }
+}
+.logOutBtn {
+  @extend .primary-button;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 3.5rem;
+  margin-right: 5rem;
+}
+.userposts-buttons {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  &:hover {
+    background: darken($color: #000000, $amount: 0);
+  }
+}
+.userposts-buttons-r {
+  @extend .userposts-buttons;
+  background: rgb(255, 151, 151) !important;
+  padding: 1rem;
+  &:hover {
+    background: darken($color: rgb(255, 151, 151), $amount: 10%) !important;
+  }
+}
