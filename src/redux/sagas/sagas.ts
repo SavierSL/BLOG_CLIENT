@@ -1,7 +1,7 @@
 import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { StringDecoder } from "string_decoder";
 import * as type from "../actions/types";
-const port = "https://mearnstacksavierslblogapp.herokuapp.com";
+const port = "https://mernstacksavierslblogapp.herokuapp.com";
 // const port = "http://localhost:5000";
 //login
 const logInData = async (email: string, password: string) => {
