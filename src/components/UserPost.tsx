@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { getUserPost } from "../redux/actions/blogPost";
 import { exitUserPost } from "../redux/actions/users";
 import Loader from "./mincomponents/loader";

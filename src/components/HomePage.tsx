@@ -9,8 +9,8 @@ import FilePondPluginImageResize from "filepond-plugin-image-resize";
 import FormLoader from "./mincomponents/formLoader";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { blogPostAction, getAllPost } from "../redux/actions/blogPost";
-import { NavLink, Redirect } from "react-router-dom";
+import { blogPostAction } from "../redux/actions/blogPost";
+import {  Redirect } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
   deletePostAction,
@@ -21,7 +21,7 @@ import {
   refreshPosted,
 } from "../redux/actions/users";
 import { motion, useAnimation } from "framer-motion";
-import { truncate } from "fs";
+
 
 export interface HomePageProps {
   theme: string;

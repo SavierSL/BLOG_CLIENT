@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPost } from "../redux/actions/blogPost";
-import { NavLink, Redirect } from "react-router-dom";
-import blogPost from "../redux/reducers/blogPosts";
+
 import BlogPost from "./mincomponents/blogPost";
 import Loader from "./mincomponents/loader";
 
@@ -11,7 +10,6 @@ export interface BlogPostsProps {}
 const BlogPosts: React.FC<BlogPostsProps> = () => {
   const blogPosts = useSelector((state: any) => state.blogPost.posts);
   const loading = useSelector((state: any) => state.blogPost.loading);
-  const token = useSelector((state: any) => state.post.token);
 
   const posts = [...blogPosts];
   const dispatch = useDispatch();
@@ -49,7 +47,7 @@ const BlogPosts: React.FC<BlogPostsProps> = () => {
   ) : (
     <div className="blogPostsContainer">
       <h1>Blog Posts</h1>
-   
+
       <div className="blogContentContainer">
         {posts.length !== 0
           ? posts.map((post: any) => {
