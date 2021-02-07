@@ -1,12 +1,12 @@
 import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
 import * as type from "../actions/types";
-const port = "https://mernstackblogappsaviersl.herokuapp.com";
+
 // const port = "http://localhost:5000";
 //login
 const logInData = async (email: string, password: string) => {
   const body = { email, password };
   console.log(body);
-  const token = await fetch(`${port}/auth/login`, {
+  const token = await fetch(`/auth/login`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -49,7 +49,7 @@ const registerData = async (name: string, email: string, password: string) => {
     headers: { "Content-type": "application/json" },
     body: JSON.stringify(body),
   };
-  const token = await fetch(`${port}/users/register`, content)
+  const token = await fetch(`/users/register`, content)
     .then(async (res) => {
       const data = await res.json();
       return data;
@@ -91,7 +91,7 @@ const blogPostData = async (
     headers: { "x-auth-token": token, "Content-type": "application/json" },
     body: JSON.stringify(body),
   };
-  const data = await fetch(`${port}/post/blog-post`, content)
+  const data = await fetch(`/post/blog-post`, content)
     .then(async (res) => {
       const data = await res.json();
       return data;
@@ -147,7 +147,7 @@ function* watchBlogPostSaga() {
 //GET ALL POST
 const getAllPost = async () => {
   const content = { method: "GET" };
-  const data = await fetch(`${port}/post/blog-posts`, content)
+  const data = await fetch(`/post/blog-posts`, content)
     .then(async (res) => {
       const data = await res.json();
       return data;
@@ -192,7 +192,7 @@ const getUserData = async (token: string) => {
       "x-auth-token": token,
     },
   };
-  const data = await fetch(`${port}/users/get-user`, content)
+  const data = await fetch(`/users/get-user`, content)
     .then(async (res) => {
       const data = await res.json();
       return data;
@@ -235,7 +235,7 @@ const getUserPosts = async (token: string) => {
       "x-auth-token": token,
     },
   };
-  const data = await fetch(`${port}/users/user-posts`, content)
+  const data = await fetch(`/users/user-posts`, content)
     .then(async (res) => {
       const data = await res.json();
       return data;
@@ -278,7 +278,7 @@ function* watchGetUserPostsSaga() {
 //GET USER POST
 const getPost = async (id: string) => {
   const content = { method: "GET" };
-  const data = await fetch(`${port}/post/blog-posts/${id}`, content)
+  const data = await fetch(`/post/blog-posts/${id}`, content)
     .then(async (res) => {
       const data = res.json();
       return data;
@@ -328,7 +328,7 @@ const deleteUserPost = async (token: string, postID: string) => {
       "x-auth-token": token,
     },
   };
-  const data = await fetch(`${port}/post/blog-post/${postID}`, content)
+  const data = await fetch(`/post/blog-post/${postID}`, content)
     .then(async (res) => {
       const data = await res.json();
       return data;
