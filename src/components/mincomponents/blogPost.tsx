@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { NavLink, Redirect } from "react-router-dom";
-import { getUserPost } from "../../redux/actions/blogPost";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 
 export interface BlogPostProps {
   post: any;
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
-  const dispatch = useDispatch();
   const [clickLink, setClickLink] = useState(false);
   console.log(post._id);
 

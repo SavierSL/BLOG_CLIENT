@@ -1,5 +1,4 @@
 import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { StringDecoder } from "string_decoder";
 import * as type from "../actions/types";
 const port = "https://mernstackblogappsaviersl.herokuapp.com";
 // const port = "http://localhost:5000";
@@ -163,15 +162,16 @@ function* getAllPostSaga() {
     const res = yield getAllPost();
     let newPosts: any[] = [];
     const encodeDataToImage = () => {
-      newPosts = res.map((post: any) => {
+      newPosts = res.map((post: any): any => {
         if (res.length !== 0) {
-          const convertToBase64 = (image: any) => {
+          const convertToBase64 = (image: any): any => {
             const buffit = Buffer.from(image);
             post.image = `${buffit}`;
           };
           convertToBase64(post.img.data);
           return post;
         }
+        return "";
       });
     };
     encodeDataToImage();

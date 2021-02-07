@@ -22,10 +22,11 @@ const FrontPage: React.FC<FrontPageProps> = ({ theme }) => {
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllPost());
-  }, []);
-  const dispatch = useDispatch();
+  }, [dispatch]);
+
   const handleInput = (e: any) => {
     e.preventDefault();
     dispatch(removeAlertAction());

@@ -18,7 +18,7 @@ const UserPost: React.FC<UserPostProps> = ({ props }) => {
 
   useEffect(() => {
     dispatch(getUserPost(postID));
-  }, []);
+  }, [dispatch, postID]);
   const ecodeDataToImage = () => {
     if (post) {
       const converToBase64 = (img: any) => {

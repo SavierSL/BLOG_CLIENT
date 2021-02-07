@@ -19,7 +19,7 @@ const BlogPosts: React.FC<BlogPostsProps> = () => {
   useEffect(() => {
     if (loading === true) dispatch(getAllPost());
     console.log("2");
-  }, []);
+  }, [dispatch, loading]);
   // const encodeDataToImage = () => {
   //   newPosts = posts.map((post: any) => {
   //     if (posts.length !== 0) {

@@ -17,7 +17,6 @@ import {
   getUserAction,
   getUserPostsAction,
   logOutUser,
-  newPostUserAction,
   refreshPosted,
 } from "../redux/actions/users";
 import { motion, useAnimation } from "framer-motion";
