@@ -1,7 +1,8 @@
 import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
+import axios from "axios";
 import * as type from "../actions/types";
+// const port = "https://mernstackblogappsaviersl.herokuapp.com";
 const port = "https://mernstackblogappsaviersl.herokuapp.com";
-// const port = "http://localhost:5000";
 //login
 const logInData = async (email: string, password: string) => {
   const body = { email, password };
@@ -160,23 +161,23 @@ const getAllPost = async () => {
 function* getAllPostSaga() {
   try {
     const res = yield getAllPost();
-    let newPosts: any[] = [];
-    const encodeDataToImage = () => {
-      newPosts = res.map((post: any): any => {
-        if (res.length !== 0) {
-          const convertToBase64 = (image: any): any => {
-            const buffit = Buffer.from(image);
-            post.image = `${buffit}`;
-          };
-          convertToBase64(post.img.data);
-          return post;
-        }
-        return "";
-      });
-    };
-    encodeDataToImage();
+    // let newPosts: any[] = [];
+    // const encodeDataToImage = () => {
+    //   newPosts = res.map((post: any): any => {
+    //     if (res.length !== 0) {
+    //       const convertToBase64 = (image: any): any => {
+    //         const buffit = Buffer.from(image);
+    //         post.image = `${buffit}`;
+    //       };
+    //       convertToBase64(post.img.data);
+    //       return post;
+    //     }
+    //     return "";
+    //   });
+    // };
+    // encodeDataToImage();
 
-    return yield put({ type: type.GET_ALL_POST_SUCCESS, payload: newPosts });
+    return yield put({ type: type.GET_ALL_POST_SUCCESS, payload: res });
   } catch (error) {
     throw error;
   }
