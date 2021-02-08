@@ -67,6 +67,11 @@ const EditPost: React.FC<EditPostProps> = ({
   const handleUpdate = (e: any) => {
     e.preventDefault();
     dispatch(editPostAction(token, editPost._id, editPost));
+    setVEditlocation(-1380);
+    setEditPostClick(false);
+    setTimeout(() => {
+      dispatch(exitUserPost());
+    }, 1000);
   };
   //EDIT POST
   const handleCloseEditPost = (e: any) => {
