@@ -2,8 +2,8 @@ import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
 // import axios from "axios";
 import * as type from "../actions/types";
 // const port = "https://mernstackblogappsaviersl.herokuapp.com";
-// const port = "https://mernstackblogappsaviersl.herokuapp.com";
-const port = "http://localhost:5000";
+const port = "https://mernstackblogappsaviersl.herokuapp.com";
+// const port = "http://localhost:5000";
 //login
 const logInData = async (email: string, password: string) => {
   const body = { email, password };
