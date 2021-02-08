@@ -367,6 +367,38 @@ function* watchRefreshSaga() {
   yield takeEvery(type.REFRESH_SAGA, refreshSaga);
 }
 
+//EDIT POST
+const editPostData = async (token: string, postID: string) => {
+  const content = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  };
+  const data = await fetch(
+    `${port}/post/blog-post/edit-post/${postID}`,
+    content
+  )
+    .then(async (res) => {
+      const data = await res.json();
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+function* editPostSaga(action: any) {
+  const { token, postID } = action.payload;
+  try {
+    const res = yield editPostData(token, postID);
+    if (res.hasOwnProperty("msg")) {
+      return yield put({ type: type.GET_USER_POSTS_FAILED, payload: res });
+    }
+  } catch (error) {}
+}
+
 export default function* rootSaga() {
   yield all([
     watchLogInSaga(),

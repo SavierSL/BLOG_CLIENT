@@ -17,6 +17,7 @@ interface InitialUserState {
   loadingPosts: boolean;
   post: IBlogPost | null;
   loading: boolean;
+  editPost: IBlogPost | null;
 }
 export const initialState: InitialUserState = {
   user: {},
@@ -25,6 +26,7 @@ export const initialState: InitialUserState = {
   loadingPosts: true,
   post: null,
   loading: true,
+  editPost: null,
 };
 interface Action {
   type: string;
@@ -81,6 +83,7 @@ const user = (state = initialState, action: Action) => {
       return {
         ...state,
         loading: true,
+        editPost: null,
       };
     }
     case types.DELETE_POST_SUCCESS: {
@@ -91,6 +94,12 @@ const user = (state = initialState, action: Action) => {
       return {
         ...state,
         posts: filterPosts,
+      };
+    }
+    case types.EDIT_POST_SUCCESS: {
+      return {
+        ...state,
+        editPost: payload,
       };
     }
 

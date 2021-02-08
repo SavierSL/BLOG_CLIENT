@@ -48,3 +48,10 @@ export const refreshPosted = () => {
     type: types.REFRESH_SAGA,
   };
 };
+
+export const editPostAction = (token:string, postID:string) => {
+  return {
+    type: types.EDIT_POST_SAGA,
+    payload: { token, postID },
+  };
+};

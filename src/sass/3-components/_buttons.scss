@@ -32,3 +32,11 @@
     background: darken($color: rgb(255, 151, 151), $amount: 10%) !important;
   }
 }
+.userposts-buttons-g {
+  @extend .userposts-buttons;
+  background: rgb(95, 111, 226) !important;
+  padding: 1rem;
+  &:hover {
+    background: darken($color: rgb(95, 111, 226), $amount: 10%) !important;
+  }
+}

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 interface UserPostsProps {
   styleThemeT: { color: string };
@@ -5,6 +6,7 @@ interface UserPostsProps {
   user: any;
   posts: any;
   handleDeleteButton: (e: any, postID: string) => void;
+  handleEditPost: (e: any, postID: string) => void;
 }
 
 const UserPosts: React.FC<UserPostsProps> = ({
@@ -13,6 +15,7 @@ const UserPosts: React.FC<UserPostsProps> = ({
   user,
   posts,
   handleDeleteButton,
+  handleEditPost,
 }) => {
   return (
     <>
@@ -51,6 +54,14 @@ const UserPosts: React.FC<UserPostsProps> = ({
                 </CopyToClipboard>
               </div>
               <div className="homeBlogContainer_blogs-delete">
+                <button
+                  className="userposts-buttons-g"
+                  onClick={(e) => {
+                    handleEditPost(e, post._id);
+                  }}
+                >
+                  EDIT
+                </button>
                 <button
                   className="userposts-buttons-r"
                   onClick={(e) => handleDeleteButton(e, post._id)}

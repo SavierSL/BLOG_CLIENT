@@ -7,20 +7,23 @@ import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImageResize from "filepond-plugin-image-resize";
 import FormLoader from "./mincomponents/formLoader";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { blogPostAction } from "../redux/actions/blogPost";
+import { blogPostAction, getUserPost } from "../redux/actions/blogPost";
 import { Redirect } from "react-router-dom";
 
 import UserPosts from "./mincomponents/userPost";
 import {
   deletePostAction,
+  editPostAction,
+  exitUserPost,
   getUserAction,
   getUserPostsAction,
   logOutUser,
   refreshPosted,
 } from "../redux/actions/users";
 import { motion, useAnimation } from "framer-motion";
+import EditPost from "./mincomponents/editPost";
 
 export interface HomePageProps {
   theme: string;
@@ -49,6 +52,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const [click, setClick] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const posted = useSelector((state: any) => state.blogPost.posted);
+  const [editPost, setEditPost] = useState(false);
   const [blogPost, setBlogPost] = useState<BlogPost>({
     title: "",
     blogContent: "",
@@ -71,6 +75,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     if (createPostClick === false) {
       animation.start("visible");
     }
+
     console.log(token);
   }, [token, dispatch, click, createPostClick, animation]);
   const { title, blogContent, img, imgType } = blogPost;
@@ -150,6 +155,18 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     setClick(!click);
   };
 
+  //EDIT POST
+  const handleEditPost = (e: any, postID: string) => {
+    e.preventDefault();
+    setEditPost(true);
+    dispatch(getUserPost(postID));
+    console.log(postID);
+  };
+  const handleCloseEditPost = (e: any) => {
+    e.preventDefault();
+    setEditPost(false);
+    dispatch(exitUserPost());
+  };
   // MAP THE POSTS OF THE USER /////////////////////////////
   const ifLoading = loading ? (
     <h1>Getting Blog Datas</h1>
@@ -160,6 +177,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
       user={user}
       posts={posts}
       handleDeleteButton={handleDeleteButton}
+      handleEditPost={handleEditPost}
     />
   );
   const handleLogout = (e: any) => {
@@ -192,6 +210,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     setCreatePostClick(false);
     setVlocation(-880);
   };
+
   //toRemoveLoadingAndCloseTheForm
   if (posted && submitLoading) {
     setTimeout(() => {
@@ -223,7 +242,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
         <div style={styleThemeBMain} className="homeBlogContainer">
           {ifLoading}
         </div>
-
+        {editPost ? <EditPost handleCloseEditPost={handleCloseEditPost} /> : ""}
         <div className="homePage_content">
           <motion.div
             animate={animation}
