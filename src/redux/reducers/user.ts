@@ -97,9 +97,17 @@ const user = (state = initialState, action: Action) => {
       };
     }
     case types.EDIT_POST_SUCCESS: {
+      const newUserPosts = state.posts.map((post: any) => {
+        if (post._id === (payload as any)._id) {
+          post.title = (payload as any).title;
+          post.blogContent = (payload as any).blogContent;
+        }
+        return post;
+      });
       return {
         ...state,
         editPost: payload,
+        posts: newUserPosts,
       };
     }
 

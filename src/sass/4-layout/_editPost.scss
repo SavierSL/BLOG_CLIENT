@@ -1,6 +1,22 @@
 .editPostContainer {
-  height: 10rem;
-  background: red;
-  width: 50rem;
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  height: 90vh;
+  background: rgb(243, 237, 237);
+  width: 90vw;
   margin: 0 auto 0 auto;
+  padding: 5rem;
+  border-radius: 3rem;
+  &_content {
+    padding: 4rem;
+    &-image {
+      position: relative;
+      height: 20rem;
+      object-fit: cover;
+      width: 100%;
+      border-radius: 1rem;
+    }
+  }
 }

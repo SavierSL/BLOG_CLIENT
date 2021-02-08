@@ -49,9 +49,13 @@ export const refreshPosted = () => {
   };
 };
 
-export const editPostAction = (token:string, postID:string) => {
+export const editPostAction = (
+  token: string | null,
+  postID: string,
+  body: any
+) => {
   return {
     type: types.EDIT_POST_SAGA,
-    payload: { token, postID },
+    payload: { token, postID, body },
   };
 };

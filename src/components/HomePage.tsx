@@ -15,7 +15,6 @@ import { Redirect } from "react-router-dom";
 import UserPosts from "./mincomponents/userPost";
 import {
   deletePostAction,
-  editPostAction,
   exitUserPost,
   getUserAction,
   getUserPostsAction,
@@ -52,7 +51,6 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const [click, setClick] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const posted = useSelector((state: any) => state.blogPost.posted);
-  const [editPost, setEditPost] = useState(false);
   const [blogPost, setBlogPost] = useState<BlogPost>({
     title: "",
     blogContent: "",
@@ -63,7 +61,11 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     null
   );
   const [vLovation, setVlocation] = useState(0);
+  const [vEditLocation, setVEditlocation] = useState(0);
+
+  const [editPostClick, setEditPostClick] = useState<null | false | true>(null);
   useEffect((): any => {
+    dispatch(exitUserPost());
     dispatch(getUserAction(token));
     dispatch(getUserPostsAction(token));
     if (token === null) {
@@ -158,15 +160,12 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   //EDIT POST
   const handleEditPost = (e: any, postID: string) => {
     e.preventDefault();
-    setEditPost(true);
     dispatch(getUserPost(postID));
+    setVEditlocation(0);
+    setEditPostClick(true);
     console.log(postID);
   };
-  const handleCloseEditPost = (e: any) => {
-    e.preventDefault();
-    setEditPost(false);
-    dispatch(exitUserPost());
-  };
+
   // MAP THE POSTS OF THE USER /////////////////////////////
   const ifLoading = loading ? (
     <h1>Getting Blog Datas</h1>
@@ -182,8 +181,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   );
   const handleLogout = (e: any) => {
     e.preventDefault();
-    console.log("logout");
-    console.log(token);
+
     dispatch(logOutUser());
     setClick(!click);
   };
@@ -242,11 +240,20 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
         <div style={styleThemeBMain} className="homeBlogContainer">
           {ifLoading}
         </div>
-        {editPost ? <EditPost handleCloseEditPost={handleCloseEditPost} /> : ""}
+        {
+          <EditPost
+            theme={theme}
+            editPostClick={editPostClick}
+            setEditPostClick={setEditPostClick}
+            setVEditlocation={setVEditlocation}
+            vEditLocation={vEditLocation}
+          />
+        }
         <div className="homePage_content">
           <motion.div
             animate={animation}
             variants={createPostVariants}
+            style={styleThemeBMain}
             initial="hidden"
             className="homePage_createBlogContainer"
           >
@@ -307,3 +314,9 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
 };
 
 export default HomePage;
+
+// const handleCloseEditPost = (e: any) => {
+//   e.preventDefault();
+//   setEditPost(false);
+//   dispatch(exitUserPost());
+// };

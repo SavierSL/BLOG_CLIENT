@@ -50,6 +50,19 @@ const blogPost = (state = initialState, action: Action) => {
         posts: filterPosts,
       };
     }
+    case types.EDIT_POST_SUCCESS: {
+      const newUserPosts = state.posts.map((post: any) => {
+        if (post._id === (payload as any)._id) {
+          post.title = (payload as any).title;
+          post.blogContent = (payload as any).blogContent;
+        }
+        return post;
+      });
+      return {
+        ...state,
+        posts: newUserPosts,
+      };
+    }
     default: {
       return state;
     }

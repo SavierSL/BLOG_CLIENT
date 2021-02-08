@@ -368,13 +368,14 @@ function* watchRefreshSaga() {
 }
 
 //EDIT POST
-const editPostData = async (token: string, postID: string) => {
+const editPostData = async (token: string, postID: string, body: any) => {
   const content = {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       "x-auth-token": token,
     },
+    body: JSON.stringify(body),
   };
   const data = await fetch(
     `${port}/post/blog-post/edit-post/${postID}`,
@@ -390,13 +391,19 @@ const editPostData = async (token: string, postID: string) => {
   return data;
 };
 function* editPostSaga(action: any) {
-  const { token, postID } = action.payload;
+  const { token, postID, body } = action.payload;
   try {
-    const res = yield editPostData(token, postID);
+    const res = yield editPostData(token, postID, body);
     if (res.hasOwnProperty("msg")) {
-      return yield put({ type: type.GET_USER_POSTS_FAILED, payload: res });
+      return yield put({ type: type.EDIT_POST_FAILED, payload: res });
     }
-  } catch (error) {}
+    yield put({ type: type.EDIT_POST_SUCCESS, payload: res });
+  } catch (error) {
+    yield put({ type: type.EDIT_POST_FAILED, payload: error });
+  }
+}
+function* watchEditPostSaga() {
+  yield takeEvery(type.EDIT_POST_SAGA, editPostSaga);
 }
 
 export default function* rootSaga() {
@@ -413,5 +420,6 @@ export default function* rootSaga() {
     watchLogOutSaga(),
     watchDeleteUserPostSaga(),
     watchRefreshSaga(),
+    watchEditPostSaga(),
   ]);
 }
