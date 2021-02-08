@@ -1,6 +1,8 @@
 import { THEMES } from "./theme/types";
 
 import { NavLink } from "react-router-dom";
+import { exitUserPost } from "../redux/actions/users";
+import { useDispatch } from "react-redux";
 
 export interface NavProps {
   theme: string;
@@ -12,6 +14,7 @@ const Nav: React.FC<NavProps> = ({ theme, setTheme }) => {
     e.preventDefault();
     theme === "LIGHT" ? setTheme(THEMES.DARK) : setTheme(THEMES.LIGHT);
   };
+  const dispatch = useDispatch();
 
   const buttonStyle: any = {
     borderRadius: "1rem",
@@ -48,7 +51,12 @@ const Nav: React.FC<NavProps> = ({ theme, setTheme }) => {
         <div className="navContainer_navButtons">
           <NavLink to="/home">
             {" "}
-            <button className="primary-button">HOME</button>
+            <button
+              className="primary-button"
+              onClick={() => dispatch(exitUserPost())}
+            >
+              HOME
+            </button>
           </NavLink>
           <NavLink to="/blog-posts">
             {" "}

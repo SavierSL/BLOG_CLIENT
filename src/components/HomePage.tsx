@@ -10,8 +10,9 @@ import FormLoader from "./mincomponents/formLoader";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { blogPostAction } from "../redux/actions/blogPost";
-import {  Redirect } from "react-router-dom";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import { Redirect } from "react-router-dom";
+
+import UserPosts from "./mincomponents/userPost";
 import {
   deletePostAction,
   getUserAction,
@@ -20,7 +21,6 @@ import {
   refreshPosted,
 } from "../redux/actions/users";
 import { motion, useAnimation } from "framer-motion";
-
 
 export interface HomePageProps {
   theme: string;
@@ -83,6 +83,8 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
       })
     );
   };
+
+  //return to frontpage if no token
   if (token === null) {
     return <Redirect to="/" />;
   }
@@ -95,6 +97,8 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     setVlocation(-880);
     console.log(blogPost);
   };
+
+  //turn the file to data//////////////////////////////////////////
   const toBase64 = (file: any) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -106,6 +110,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
       }
       return reader;
     });
+
   let updatedImage: string | unknown;
   const newImage = toBase64(file);
   const dataImage = async () => {
@@ -114,6 +119,9 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     return newData;
   };
   dataImage();
+  //////////////////////////////////////////////////////////////////
+
+  //input /////////////////////////////////////////////////////////////
   const handleInput = (e: any) => {
     e.preventDefault();
     setBlogPost({
@@ -122,6 +130,8 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
       img: updatedImage,
     });
   };
+
+  //STYLES FOR LIGHT AND DARK THEME
   const styleThemeT = {
     color: theme === "LIGHT" ? "#000" : "#fff",
   };
@@ -131,58 +141,27 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const styleThemeBMain = {
     background: theme === "LIGHT" ? "#f1f2f2" : "#005068",
   };
+
+  //Delete /////////////////////////////////////////////////
   const handleDeleteButton = (e: any, postID: string) => {
     e.preventDefault();
     console.log("delete");
     dispatch(deletePostAction(token, postID));
     setClick(!click);
   };
-  const userPosts =
-    posts.length === 0 ? (
-      <h3 className="tertiary-heading">You do not have any blog post</h3>
-    ) : (
-      posts.map((post: any) => {
-        // return <img style={{ height: "20rem" }} src={post.image} alt="" />;
 
-        return (
-          <div style={styleThemeB} className="homeBlogContainer_blogs">
-            <img
-              className="homeBlogContainer_blogs-image"
-              src={user.avatar}
-              alt=""
-            />
-            <div className="homeBlogContainer_blogs-details">
-              <p className="primary-p" style={styleThemeT}>
-                {post.title} <span> - {user.name}</span>
-              </p>
-              <p className="primary-p" style={styleThemeT}>
-                {post.date}
-              </p>
-              <p style={{ color: "#00aeef" }} className="primary-p">
-                {user.email}
-              </p>
-            </div>
-            <div className="homeBlogContainer_blogs-link">
-              <p className="light-p">{`http://localhost:3000/user-post/${post._id}`}</p>
-              <CopyToClipboard
-                text={`http://localhost:3000/user-post/${post._id}`}
-              >
-                <button className="userposts-buttons">Copy to clipboard</button>
-              </CopyToClipboard>
-            </div>
-            <div className="homeBlogContainer_blogs-delete">
-              <button
-                className="userposts-buttons-r"
-                onClick={(e) => handleDeleteButton(e, post._id)}
-              >
-                DELETE
-              </button>
-            </div>
-          </div>
-        );
-      })
-    );
-  const ifLoading = loading ? <h1>Getting Blog Datas</h1> : userPosts;
+  // MAP THE POSTS OF THE USER /////////////////////////////
+  const ifLoading = loading ? (
+    <h1>Getting Blog Datas</h1>
+  ) : (
+    <UserPosts
+      styleThemeT={styleThemeT}
+      styleThemeB={styleThemeB}
+      user={user}
+      posts={posts}
+      handleDeleteButton={handleDeleteButton}
+    />
+  );
   const handleLogout = (e: any) => {
     e.preventDefault();
     console.log("logout");

@@ -2,7 +2,8 @@ import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
 // import axios from "axios";
 import * as type from "../actions/types";
 // const port = "https://mernstackblogappsaviersl.herokuapp.com";
-const port = "https://mernstackblogappsaviersl.herokuapp.com";
+// const port = "https://mernstackblogappsaviersl.herokuapp.com";
+const port = "http://localhost:5000";
 //login
 const logInData = async (email: string, password: string) => {
   const body = { email, password };
@@ -110,17 +111,17 @@ function* blogPostSaga(action: any) {
     if (res.hasOwnProperty("msg")) {
       return yield put({ type: type.BLOGPOST_FAILED, payload: res });
     }
-
-    const ecodeDataToImage = () => {
-      if (res) {
-        const converToBase64 = (img: any) => {
-          const buffit = Buffer.from(img);
-          res.image = `${buffit}`;
-        };
-        converToBase64(res.img);
-      }
-    };
-    ecodeDataToImage();
+    // to turn data to image
+    // const ecodeDataToImage = () => {
+    //   if (res) {
+    //     const converToBase64 = (img: any) => {
+    //       const buffit = Buffer.from(img);
+    //       res.image = `${buffit}`;
+    //     };
+    //     converToBase64(res.img);
+    //   }
+    // };
+    // ecodeDataToImage();
     yield put({ type: type.NEW_USER_POST_SUCCESS, payload: res });
     return yield put({ type: type.BLOGPOST_SUCCESS, payload: res });
   } catch (error) {

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+// import CopyToClipboard from "react-copy-to-clipboard";
 import { Redirect } from "react-router-dom";
 
 export interface BlogPostProps {
   post: any;
+  theme: string;
 }
 
-const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
+const BlogPost: React.FC<BlogPostProps> = ({ post, theme }) => {
   const [clickLink, setClickLink] = useState(false);
   console.log(post._id);
 
@@ -17,6 +19,12 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   if (clickLink) {
     return <Redirect to={`user-post/${post._id}`} />;
   }
+  const styleThemeT = {
+    color: theme === "LIGHT" ? "#000" : "#fff",
+  };
+  const styleThemeB = {
+    background: theme === "LIGHT" ? "#fff" : "#000",
+  };
   return (
     <div
       onClick={(e) => {
@@ -24,21 +32,26 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
       }}
       className="blogContentContainer-content"
     >
-      <div className="blogContentContainer-content-box">
-        <div className="blogContentContainer-content-box-color"></div>
-        <div className="blogContentContainer-content-box-details">
-          <h1 className="blogContentContainer-content-box-details-txt">
-            {`${post.name}'s blog`}
-          </h1>
+      <div style={styleThemeB} className="homeBlogContainer_blogs">
+        <img
+          className="homeBlogContainer_blogs-image"
+          src={post.user.avatar}
+          alt=""
+        />
+        <div className="homeBlogContainer_blogs-details">
+          <p className="primary-p" style={styleThemeT}>
+            {post.title} <span> - {post.user.name}</span>
+          </p>
+
+          <p className="primary-p" style={styleThemeT}>
+            {post.date}
+          </p>
+          <p style={{ color: "#00aeef" }} className="primary-p">
+            {post.user.email}
+          </p>
         </div>
-      </div>
-      <img
-        className="blogContentContainer-content-image"
-        src={post.image}
-        alt=""
-      />
-      <div className="blogContentContainer-content-details">
-        <h1>{post.title}</h1>
+
+        <div className="homeBlogContainer_blogs-delete"></div>
       </div>
     </div>
   );

@@ -19,6 +19,8 @@ const UserPost: React.FC<UserPostProps> = ({ props }) => {
   useEffect(() => {
     dispatch(getUserPost(postID));
   }, [dispatch, postID]);
+
+  //Encode the data to display
   const ecodeDataToImage = () => {
     if (post) {
       const converToBase64 = (img: any) => {
@@ -34,9 +36,12 @@ const UserPost: React.FC<UserPostProps> = ({ props }) => {
     dispatch(exitUserPost());
     setExit(true);
   };
+
+  // to go back
   if (exit) {
     return <Redirect to="/blog-posts" />;
   }
+
   const blogPostContent = loading ? (
     <Loader />
   ) : (

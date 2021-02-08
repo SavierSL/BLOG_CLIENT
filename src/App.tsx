@@ -44,7 +44,11 @@ const App: React.FC<AppProps> = () => {
                   path="/user-post/:params_id"
                   render={(props) => <UserPost props={props} />}
                 />
-                <Route exact path="/blog-posts" component={BlogPosts} />
+                <Route
+                  exact
+                  path="/blog-posts"
+                  render={() => <BlogPosts theme={theme} />}
+                />
               </Switch>
               <Footer />
             </Router>

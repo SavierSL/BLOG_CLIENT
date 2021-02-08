@@ -1,4 +1,5 @@
 import * as types from "../actions/types";
+import { IBlogPost } from "./user";
 
 interface InitalStateBlogPost {
   posts: [];
@@ -10,9 +11,10 @@ export const initialState: InitalStateBlogPost = {
   loading: true,
   posted: false,
 };
+
 interface Action {
   type: string;
-  payload: string;
+  payload: { msg: string; deleted: IBlogPost };
 }
 
 const blogPost = (state = initialState, action: Action) => {
@@ -36,6 +38,16 @@ const blogPost = (state = initialState, action: Action) => {
       return {
         ...state,
         posted: false,
+      };
+    }
+    case types.DELETE_POST_SUCCESS: {
+      const deletedId = (payload.deleted as any)._id;
+      const filterPosts = state.posts.filter((post: any) => {
+        return post._id !== deletedId;
+      });
+      return {
+        ...state,
+        posts: filterPosts,
       };
     }
     default: {
