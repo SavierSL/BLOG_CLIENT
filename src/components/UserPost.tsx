@@ -18,6 +18,7 @@ const UserPost: React.FC<UserPostProps> = ({ props }) => {
 
   useEffect(() => {
     dispatch(getUserPost(postID));
+    window.scrollTo(0, 0);
   }, [dispatch, postID]);
 
   //Encode the data to display

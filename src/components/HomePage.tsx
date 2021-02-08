@@ -65,6 +65,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
 
   const [editPostClick, setEditPostClick] = useState<null | false | true>(null);
   useEffect((): any => {
+    window.scrollTo(0, 0);
     dispatch(exitUserPost());
     dispatch(getUserAction(token));
     dispatch(getUserPostsAction(token));

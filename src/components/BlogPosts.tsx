@@ -19,6 +19,7 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ theme }) => {
   //Get all post first if it is loading
   useEffect(() => {
     if (loading === true) dispatch(getAllPost());
+    window.scrollTo(0, 0);
   }, [dispatch, loading]);
 
   const postsContents = loading ? (
