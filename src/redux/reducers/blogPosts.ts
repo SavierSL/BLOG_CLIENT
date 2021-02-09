@@ -61,6 +61,7 @@ const blogPost = (state = initialState, action: Action) => {
       return {
         ...state,
         posts: newUserPosts,
+        posted: true,
       };
     }
     default: {

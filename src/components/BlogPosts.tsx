@@ -25,7 +25,10 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ theme }) => {
   const postsContents = loading ? (
     <Loader />
   ) : (
-    <div className="blogPostsContainer">
+    <div
+      className="blogPostsContainer"
+      style={{ height: blogPosts.length === 0 ? "100vh" : "100%" }}
+    >
       <h1>Blog Posts</h1>
 
       <div className="blogContentContainer">

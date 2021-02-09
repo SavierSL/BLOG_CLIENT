@@ -18,6 +18,8 @@ import Footer from "./components/Footer";
 export interface AppProps {}
 
 const App: React.FC<AppProps> = () => {
+  const [clickLogIn, setClickLogIn] = useState(false);
+  const [click, setClick] = useState(false);
   const [theme, setTheme] = useState<string>(THEMES.LIGHT);
 
   return (
@@ -26,18 +28,32 @@ const App: React.FC<AppProps> = () => {
         <Provider store={store}>
           <Theme>
             <Router>
-              <Nav theme={theme} setTheme={setTheme} />
+              <Nav
+                theme={theme}
+                click={click}
+                setClick={setClick}
+                setTheme={setTheme}
+                clickLogIn={clickLogIn}
+              />
               <Switch>
                 <Route
                   exact
                   path="/"
-                  render={() => <FrontPage theme={theme} />}
+                  render={() => (
+                    <FrontPage
+                      clickLogIn={clickLogIn}
+                      setClickLogIn={setClickLogIn}
+                      theme={theme}
+                    />
+                  )}
                 />
                 <Route exact path="/register" component={RegisterPage} />
                 <Route
                   exact
                   path="/home"
-                  render={() => <HomePage theme={theme} />}
+                  render={() => (
+                    <HomePage click={click} setClick={setClick} theme={theme} />
+                  )}
                 />
                 <Route
                   exact

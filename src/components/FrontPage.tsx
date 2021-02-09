@@ -8,13 +8,19 @@ import { getAllPost } from "../redux/actions/blogPost";
 
 export interface FrontPageProps {
   theme: any;
+  clickLogIn: boolean;
+  setClickLogIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface logInState {
   email: string;
   password: string;
 }
 
-const FrontPage: React.FC<FrontPageProps> = ({ theme }) => {
+const FrontPage: React.FC<FrontPageProps> = ({
+  theme,
+  setClickLogIn,
+  clickLogIn,
+}) => {
   const error = useSelector((state: any) => state.post.msg);
   const isAuth = useSelector((state: any) => state.post.isAuth);
   console.log(theme);
@@ -35,7 +41,7 @@ const FrontPage: React.FC<FrontPageProps> = ({ theme }) => {
   const { email, password } = logInInput;
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log("submitted");
+    setClickLogIn(!clickLogIn);
     dispatch(logInAction(email, password));
   };
   console.log(logInInput);

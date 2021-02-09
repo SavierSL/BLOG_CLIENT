@@ -5,6 +5,9 @@
   margin: 0rem auto 0rem auto;
   padding: 2rem 5rem 0 5rem;
   padding-bottom: 25rem;
+  @include respond(phone) {
+    height: 100%;
+  }
   &_createBlogContainer {
     position: fixed;
     top: 0;

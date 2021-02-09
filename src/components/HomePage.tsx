@@ -18,7 +18,6 @@ import {
   exitUserPost,
   getUserAction,
   getUserPostsAction,
-  logOutUser,
   refreshPosted,
 } from "../redux/actions/users";
 import { motion, useAnimation } from "framer-motion";
@@ -26,6 +25,8 @@ import EditPost from "./mincomponents/editPost";
 
 export interface HomePageProps {
   theme: string;
+  click: boolean;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export interface BlogPost {
   title: string;
@@ -40,7 +41,7 @@ registerPlugin(
   FilePondPluginImageResize
 );
 
-const HomePage: React.FC<HomePageProps> = ({ theme }) => {
+const HomePage: React.FC<HomePageProps> = ({ theme, click, setClick }) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const user = useSelector((state: any) => state.user.user);
@@ -48,7 +49,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const [file, setFiles] = useState([]);
   const posts = useSelector((state: any) => state.user.posts);
   const loading = useSelector((state: any) => state.user.loadingPosts);
-  const [click, setClick] = useState(false);
+
   const [submitLoading, setSubmitLoading] = useState(false);
   const posted = useSelector((state: any) => state.blogPost.posted);
   const [blogPost, setBlogPost] = useState<BlogPost>({
@@ -65,7 +66,6 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
 
   const [editPostClick, setEditPostClick] = useState<null | false | true>(null);
   useEffect((): any => {
-    window.scrollTo(0, 0);
     dispatch(exitUserPost());
     dispatch(getUserAction(token));
     dispatch(getUserPostsAction(token));
@@ -81,6 +81,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
 
     console.log(token);
   }, [token, dispatch, click, createPostClick, animation]);
+
   const { title, blogContent, img, imgType } = blogPost;
   const handleUpdateFIle = (file: any) => {
     setFiles(
@@ -149,6 +150,10 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const styleThemeBMain = {
     background: theme === "LIGHT" ? "#f1f2f2" : "#005068",
   };
+  const styleThemeBPostsMain = {
+    background: theme === "LIGHT" ? "#f1f2f2" : "#005068",
+    height: posts.length === 0 ? "100vh" : "100%",
+  };
 
   //Delete /////////////////////////////////////////////////
   const handleDeleteButton = (e: any, postID: string) => {
@@ -180,12 +185,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
       handleEditPost={handleEditPost}
     />
   );
-  const handleLogout = (e: any) => {
-    e.preventDefault();
 
-    dispatch(logOutUser());
-    setClick(!click);
-  };
   const createPostVariants = {
     hidden: {
       y: -180,
@@ -215,30 +215,29 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     setTimeout(() => {
       setSubmitLoading(false);
       dispatch(refreshPosted());
-    }, 3000);
+    }, 1000);
 
     console.log("hey");
   }
   return (
     <>
       <div className="homePage">
-        <button onClick={(e) => handleLogout(e)} className="logOutBtn">
-          LOG OUT
-        </button>
-
         <h1 className="tertiary-heading">{user.name}</h1>
         <div>
           <span className="primary-span">{user.email}</span>
         </div>
-        <button
-          style={{ marginTop: "2rem" }}
-          className="primary-button"
-          onClick={(e) => createPostButton(e)}
-        >
-          Create Post
-        </button>
+        <div>
+          <button
+            style={{ marginTop: "2rem" }}
+            className="primary-button"
+            onClick={(e) => createPostButton(e)}
+          >
+            Create Post
+          </button>
+        </div>
+
         {submitLoading ? <FormLoader /> : ""}
-        <div style={styleThemeBMain} className="homeBlogContainer">
+        <div style={styleThemeBPostsMain} className="homeBlogContainer">
           {ifLoading}
         </div>
         {
@@ -248,6 +247,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
             setEditPostClick={setEditPostClick}
             setVEditlocation={setVEditlocation}
             vEditLocation={vEditLocation}
+            setSubmitLoading={setSubmitLoading}
           />
         }
         <div className="homePage_content">
@@ -301,12 +301,26 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
                 />
               </form>
             </div>
-            <button className="primary-button" onClick={(e) => handleSubmit(e)}>
-              Submit
-            </button>
-            <button className="primary-button" onClick={(e) => handleClose(e)}>
-              Close
-            </button>
+            <div style={{ display: "flex", height: "4rem" }}>
+              <div>
+                <button
+                  className="primary-button"
+                  onClick={(e) => handleSubmit(e)}
+                  style={{ height: "100%" }}
+                >
+                  Submit
+                </button>
+              </div>
+              <div>
+                <button
+                  className="primary-button"
+                  onClick={(e) => handleClose(e)}
+                  style={{ height: "100%" }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

@@ -9,6 +9,7 @@ export interface EditPostProps {
   vEditLocation: number;
   setEditPostClick: React.Dispatch<React.SetStateAction<boolean | null>>;
   setVEditlocation: React.Dispatch<React.SetStateAction<number>>;
+  setSubmitLoading: React.Dispatch<React.SetStateAction<boolean>>;
   theme: string;
 }
 
@@ -17,6 +18,7 @@ const EditPost: React.FC<EditPostProps> = ({
   vEditLocation,
   setEditPostClick,
   setVEditlocation,
+  setSubmitLoading,
   theme,
 }) => {
   const toEditPost = useSelector((state: any) => state.user.post);
@@ -69,9 +71,10 @@ const EditPost: React.FC<EditPostProps> = ({
     dispatch(editPostAction(token, editPost._id, editPost));
     setVEditlocation(-1380);
     setEditPostClick(false);
+    setSubmitLoading(true);
     setTimeout(() => {
       dispatch(exitUserPost());
-    }, 1000);
+    }, 1500);
   };
   //EDIT POST
   const handleCloseEditPost = (e: any) => {
@@ -115,10 +118,16 @@ const EditPost: React.FC<EditPostProps> = ({
         <button
           onClick={(e) => handleCloseEditPost(e)}
           className="primary-button"
-          style={{ position: "absolute", right: "5rem", top: "3rem" }}
+          style={{
+            position: "absolute",
+            right: "5rem",
+            top: "3rem",
+            height: "4rem",
+          }}
         >
           CLOSE
         </button>
+
         {editPost && !loading ? (
           <div className="editPostContainer_content">
             <img

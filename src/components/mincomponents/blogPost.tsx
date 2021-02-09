@@ -39,15 +39,12 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, theme }) => {
           alt=""
         />
         <div className="homeBlogContainer_blogs-details">
-          <p className="primary-p" style={styleThemeT}>
+          <p style={{ color: "#00aeef" }} className="primary-p">
             {post.title} <span> - {post.user.name}</span>
           </p>
 
           <p className="primary-p" style={styleThemeT}>
             {post.date}
-          </p>
-          <p style={{ color: "#00aeef" }} className="primary-p">
-            {post.user.email}
           </p>
         </div>
 

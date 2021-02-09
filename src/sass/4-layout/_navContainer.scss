@@ -1,12 +1,19 @@
 .navContainer {
-  padding: 1rem;
-  padding-left: 5rem;
-  padding-right: 15rem;
+  padding: 0 4rem 0 4rem;
   display: flex;
+
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   &_navTitle {
     display: flex;
     align-items: center;
+  }
+  &_navButtons {
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 }

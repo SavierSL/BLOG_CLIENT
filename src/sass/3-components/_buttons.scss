@@ -1,20 +1,22 @@
 .primary-button {
   border: none;
-  padding: 1rem;
+  padding: 1rem 2rem 1rem 2rem;
   border-radius: 1rem;
+  margin-right: 1rem;
+  height: 70%;
   cursor: pointer;
+  @include respond(phone) {
+    height: 100%;
+    padding: 1rem;
+    // &:not(:last-child) {
+    //   margin-right: 5rem;
+    // }
+  }
   &:hover {
     background-color: darken($color: #00aeef, $amount: 10%);
   }
 }
-.logOutBtn {
-  @extend .primary-button;
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin-top: 3.5rem;
-  margin-right: 5rem;
-}
+
 .userposts-buttons {
   padding: 0.5rem;
   border: none;
